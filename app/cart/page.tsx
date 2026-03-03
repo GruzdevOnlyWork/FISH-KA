@@ -10,7 +10,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { useCartStore } from "@/lib/cart-store"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft, QrCode } from "lucide-react"
+import { Footer } from "@/components/footer"
 import { createClient } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"
 
@@ -20,6 +22,8 @@ export default function CartPage() {
   const [customerPhone, setCustomerPhone] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [privacyAccepted, setPrivacyAccepted] = useState(false)
+  const [errors, setErrors] = useState<{ name?: string; phone?: string; privacy?: string }>({})
   const router = useRouter()
 
   useEffect(() => {
@@ -34,8 +38,31 @@ export default function CartPage() {
     }).format(price)
   }
 
+  const validateForm = () => {
+    const newErrors: { name?: string; phone?: string; privacy?: string } = {}
+
+    if (customerName && customerName.trim().length < 2) {
+      newErrors.name = "Имя должно содержать минимум 2 символа"
+    }
+
+    if (customerPhone) {
+      const phoneClean = customerPhone.replace(/[\s\-\(\)]/g, "")
+      if (!/^(\+7|8)\d{10}$/.test(phoneClean)) {
+        newErrors.phone = "Введите корректный номер телефона (например, +7 999 123-45-67)"
+      }
+    }
+
+    if (!privacyAccepted) {
+      newErrors.privacy = "Необходимо согласие на обработку персональных данных"
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
   const handleCreateOrder = async () => {
     if (items.length === 0) return
+    if (!validateForm()) return
 
     setIsLoading(true)
     try {
@@ -115,9 +142,9 @@ export default function CartPage() {
                 <CardHeader>
                   <CardTitle>Товары в корзине ({items.length})</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="divide-y">
                   {items.map((item) => (
-                    <div key={item.product.id} className="flex gap-4">
+                    <div key={item.product.id} className="flex gap-4 py-4 first:pt-0 last:pb-0">
                       <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-secondary">
                         <Image
                           src={item.product.image_url || "/placeholder.svg?height=80&width=80"}
@@ -182,8 +209,13 @@ export default function CartPage() {
                       id="name"
                       placeholder="Иван"
                       value={customerName}
-                      onChange={(e) => setCustomerName(e.target.value)}
+                      onChange={(e) => {
+                        setCustomerName(e.target.value)
+                        if (errors.name) setErrors((prev) => ({ ...prev, name: undefined }))
+                      }}
+                      className={errors.name ? "border-destructive" : ""}
                     />
+                    {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="phone">Телефон (необязательно)</Label>
@@ -191,8 +223,13 @@ export default function CartPage() {
                       id="phone"
                       placeholder="+7 (999) 123-45-67"
                       value={customerPhone}
-                      onChange={(e) => setCustomerPhone(e.target.value)}
+                      onChange={(e) => {
+                        setCustomerPhone(e.target.value)
+                        if (errors.phone) setErrors((prev) => ({ ...prev, phone: undefined }))
+                      }}
+                      className={errors.phone ? "border-destructive" : ""}
                     />
+                    {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
                   </div>
 
                   <Separator />
@@ -207,6 +244,24 @@ export default function CartPage() {
                       <span className="text-xl text-accent">{formatPrice(getTotalPrice())}</span>
                     </div>
                   </div>
+                  <div className="space-y-2">
+                    <div className="flex items-start gap-3">
+                      <Checkbox
+                        id="privacy"
+                        checked={privacyAccepted}
+                        onCheckedChange={(checked) => {
+                          setPrivacyAccepted(checked === true)
+                          if (errors.privacy) setErrors((prev) => ({ ...prev, privacy: undefined }))
+                        }}
+                        className={errors.privacy ? "border-destructive" : ""}
+                      />
+                      <Label htmlFor="privacy" className="text-sm leading-snug cursor-pointer">
+                        Я соглашаюсь на обработку персональных данных в соответствии с{" "}
+                        <span className="text-primary underline underline-offset-2">политикой конфиденциальности</span>
+                      </Label>
+                    </div>
+                    {errors.privacy && <p className="text-sm text-destructive">{errors.privacy}</p>}
+                  </div>
                 </CardContent>
                 <CardFooter>
                   <Button className="w-full gap-2" size="lg" onClick={handleCreateOrder} disabled={isLoading}>
@@ -219,6 +274,7 @@ export default function CartPage() {
           </div>
         )}
       </main>
+      <Footer />
     </div>
   )
 }

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip install:*)",
+      "Bash(pip3 install:*)",
+      "Bash(py --version)",
+      "Bash(node --version:*)",
+      "Bash(npm install:*)",
+      "Bash(node scripts/create-presentation.mjs:*)"
+    ]
+  }
+}

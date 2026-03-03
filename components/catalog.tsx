@@ -9,7 +9,8 @@ import { PriceFilter } from "./price-filter"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { ChevronDown, SlidersHorizontal } from "lucide-react"
+import { ChevronDown, SlidersHorizontal, Fish, Waves } from "lucide-react"
+import { Footer } from "./footer"
 import type { Product, Category } from "@/lib/types"
 
 interface CatalogProps {
@@ -103,16 +104,24 @@ export function Catalog({ initialProducts, categories }: CatalogProps) {
       <Header onSearch={setSearchQuery} searchQuery={searchQuery} />
 
       <main className="container mx-auto px-4 py-6">
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold md:text-3xl">Каталог товаров</h1>
-          <p className="mt-1 text-muted-foreground">
-            {filteredProducts.length} товаров
-            {activeFiltersCount > 0 && (
-              <Badge variant="secondary" className="ml-2">
-                {activeFiltersCount} фильтров
-              </Badge>
-            )}
-          </p>
+        <div className="mb-8 rounded-2xl bg-gradient-to-r from-primary/10 via-accent/10 to-primary/5 p-6 md:p-8">
+          <div className="flex items-center gap-4">
+            <div className="hidden sm:flex h-14 w-14 items-center justify-center rounded-xl bg-primary/20">
+              <Fish className="h-7 w-7 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold md:text-3xl">Каталог товаров</h1>
+              <p className="mt-1 text-muted-foreground flex items-center gap-2">
+                <Waves className="h-4 w-4" />
+                {filteredProducts.length} товаров
+                {activeFiltersCount > 0 && (
+                  <Badge variant="secondary" className="ml-1">
+                    {activeFiltersCount} фильтров
+                  </Badge>
+                )}
+              </p>
+            </div>
+          </div>
         </div>
 
         <div className="mb-6 space-y-4">
@@ -149,6 +158,7 @@ export function Catalog({ initialProducts, categories }: CatalogProps) {
         <ProductGrid products={filteredProducts} />
       </main>
 
+      <Footer />
     </div>
   )
 }
