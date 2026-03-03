@@ -23,7 +23,8 @@ export function ProductCard({ product }: ProductCardProps) {
   const cartItem = items.find((item) => item.product.id === product.id)
 
   const handleAddToCart = (e: React.MouseEvent) => {
-    e.stopPropagation() 
+    e.preventDefault()
+    e.stopPropagation()
     setIsAdding(true)
     addItem(product)
     setTimeout(() => setIsAdding(false), 500)
@@ -77,7 +78,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
         </CardContent>
         
-        <CardFooter className="p-4 pt-0 border-t">
+        <CardFooter className="p-4 pt-3 border-t border-border/50">
           <Button
             className="w-full gap-2"
             onClick={handleAddToCart}

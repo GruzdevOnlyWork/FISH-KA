@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { ShoppingCart, Ruler, Tag, CheckCircle, Clock, MapPin, Check } from "lucide-react"
+import { ShoppingCart, Ruler, Tag, CheckCircle, Clock, MapPin, Check, ArrowLeft } from "lucide-react"
+import { Footer } from "./footer"
 import { useCartStore } from "@/lib/cart-store"
 import { useState } from "react"
 import Link from "next/link"
@@ -55,15 +56,15 @@ export function ProductPublicDetails({ product, attributes }: ProductPublicDetai
   }
 
   return (
-    <div className="min-h-screen bg-background py-8">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <Link 
+          <Link
             href="/"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
-            <span className="w-4 h-4 rotate-180">→</span>
-            На главную
+            <ArrowLeft className="h-4 w-4" />
+            Вернуться в каталог
           </Link>
         </div>
 
@@ -219,6 +220,7 @@ export function ProductPublicDetails({ product, attributes }: ProductPublicDetai
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
