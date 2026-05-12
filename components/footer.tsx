@@ -31,8 +31,6 @@ export function Footer() {
             <h3 className="font-semibold">Информация</h3>
             <nav className="flex flex-col gap-2 text-sm text-muted-foreground">
               <Link href="/cart" className="hover:text-foreground transition-colors">Корзина</Link>
-              <span className="hover:text-foreground transition-colors cursor-default">О магазине</span>
-              <span className="hover:text-foreground transition-colors cursor-default">Доставка и оплата</span>
             </nav>
           </div>
 
@@ -41,22 +39,14 @@ export function Footer() {
             <div className="flex flex-col gap-3 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
                 <Phone className="h-4 w-4 shrink-0" />
-                <span>+7 (999) 123-45-67</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4 shrink-0" />
-                <span>info@fish-ka.ru</span>
+                <span>+7 (953) 668-94-34</span>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="h-4 w-4 shrink-0" />
-                <span>г. Москва, ул. Рыбацкая, 1</span>
+                <span>Буй, ул. Октябрьской Революции, 55</span>
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="mt-8 border-t pt-6 text-center text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} FISH-KA. Все права защищены.
         </div>
       </div>
     </footer>

@@ -3,11 +3,10 @@
 import type React from "react"
 
 import { Button } from "@/components/ui/button"
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import type { Category } from "@/lib/types"
 import { cn } from "@/lib/utils"
-import { Anchor, Target, Settings, Shirt, Briefcase, Fish } from "lucide-react"
+import { Anchor, Target, Settings, Shirt, Briefcase, Fish, Package, Waves } from "lucide-react"
 
 interface CategoryFilterProps {
   categories: Category[]
@@ -17,18 +16,25 @@ interface CategoryFilterProps {
 
 const iconMap: Record<string, React.ReactNode> = {
   "🎣": <Fish className="h-4 w-4" />,
-  "🔄": <Settings className="h-4 w-4" />,
+  "🐟": <Fish className="h-4 w-4" />,
   "🪱": <Target className="h-4 w-4" />,
-  "🎯": <Anchor className="h-4 w-4" />,
+  "🌊": <Waves className="h-4 w-4" />,
+  "🎋": <Anchor className="h-4 w-4" />,
+  "🔄": <Settings className="h-4 w-4" />,
+  "🧵": <Anchor className="h-4 w-4" />,
+  "🪝": <Anchor className="h-4 w-4" />,
+  "🎯": <Target className="h-4 w-4" />,
+  "🥫": <Package className="h-4 w-4" />,
   "🧥": <Shirt className="h-4 w-4" />,
   "🎒": <Briefcase className="h-4 w-4" />,
+  "🔧": <Settings className="h-4 w-4" />,
 }
 
 export function CategoryFilter({ categories, selectedCategory, onSelectCategory }: CategoryFilterProps) {
   return (
     <TooltipProvider delayDuration={200}>
-      <ScrollArea className="w-full whitespace-nowrap">
-        <div className="flex gap-2 pb-4">
+      <div className="w-full">
+        <div className="flex flex-wrap gap-2 pb-4">
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
@@ -63,8 +69,7 @@ export function CategoryFilter({ categories, selectedCategory, onSelectCategory 
             </Tooltip>
           ))}
         </div>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
+      </div>
     </TooltipProvider>
   )
 }

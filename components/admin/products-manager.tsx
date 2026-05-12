@@ -239,13 +239,20 @@ export function ProductsManager({ initialProducts, categories }: ProductsManager
       setIsDialogOpen(false)
       router.refresh()
 
-      const { data: updatedProducts } = await supabase
+      const { data: rawProducts } = await supabase
         .from("products")
-        .select("*, category:categories(*)")
+        .select("*, product_categories(category_id, categories:categories(id, name, slug, icon))")
         .order("created_at", { ascending: false })
 
-      if (updatedProducts) {
-        setProducts(updatedProducts)
+      if (rawProducts) {
+        const mapped = rawProducts.map((product: any) => ({
+          ...product,
+          categories: product.product_categories?.map((pc: any) => ({
+            category_id: pc.categories.id,
+            categories: pc.categories
+          })) || []
+        }))
+        setProducts(mapped)
       }
 
     } catch (error) {
