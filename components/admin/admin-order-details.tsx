@@ -159,7 +159,7 @@ export function AdminOrderDetails({ order: initialOrder, orderItems: initialItem
       await refreshOrderData()
       router.refresh()
     } catch (error) {
-      console.error("[v0] Error updating status:", error)
+      console.error("Error updating status:", error)
     } finally {
       setIsUpdating(false)
     }

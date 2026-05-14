@@ -98,7 +98,7 @@ export default function CartPage() {
       clearCart()
       router.push(`/order/${qrCode}`)
     } catch (error) {
-      console.error("[v0] Error creating order:", error)
+      console.error("Error creating order:", error)
       alert("Ошибка при создании заказа. Попробуйте ещё раз.")
     } finally {
       setIsLoading(false)

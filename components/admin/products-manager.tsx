@@ -256,7 +256,7 @@ export function ProductsManager({ initialProducts, categories }: ProductsManager
       }
 
     } catch (error) {
-      console.error("[v0] Error saving product:", error)
+      console.error("Error saving product:", error)
       alert("Ошибка сохранения: " + (error as Error).message)
     } finally {
       setIsLoading(false)
@@ -280,7 +280,7 @@ export function ProductsManager({ initialProducts, categories }: ProductsManager
       setProducts((prev) => prev.filter((p) => p.id !== productId))
       router.refresh()
     } catch (error) {
-      console.error("[v0] Error deleting product:", error)
+      console.error("Error deleting product:", error)
       alert("Ошибка удаления: " + (error as Error).message)
     } finally {
       setIsLoading(false)
