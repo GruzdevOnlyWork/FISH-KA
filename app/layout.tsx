@@ -9,7 +9,9 @@ const nunito = Nunito({ subsets: ["latin", "cyrillic"] })
 export const metadata: Metadata = {
   title: "FISH-KA | Рыболовный магазин",
   description: "Магазин рыболовных товаров FISH-KA - удочки, катушки, приманки, снасти и аксессуары для рыбалки",
-    
+  icons: {
+    icon: "/images/icon.ico",
+  },
 }
 
 export default function RootLayout({
